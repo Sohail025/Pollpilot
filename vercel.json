@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "src": "/login",
+      "dest": "/"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard"
+    },
+    {
+      "src": "/addpoll",
+      "dest": "/addpoll"
+    }
+  ]
+}
