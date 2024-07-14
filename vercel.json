@@ -6,11 +6,11 @@
     },
     {
       "src": "/dashboard",
-      "dest": "/dashboard"
+      "dest": "/"
     },
     {
       "src": "/addpoll",
-      "dest": "/addpoll"
+      "dest": "/"
     }
   ]
 }
