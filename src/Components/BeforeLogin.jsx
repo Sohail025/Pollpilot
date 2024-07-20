@@ -8,9 +8,32 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
-
+import { Button } from "@mui/material";
+import { Google } from "@mui/icons-material";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "../Context/Firebase/FirebaseConfig";
+import { googleAuth } from "../Context/Firebase/FirebaseConfig";
 export const BeforeLogin = () => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const SingInHandler = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error(error);
+    }
+    setEmail("");
+    setPassword("");
+  };
+  const googleLoginHandler = async () => {
+    try {
+      await signInWithPopup(auth, googleAuth);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const theme = useTheme();
+
   const isSmallScreen640 = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallScreen768 = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallScreen1024 = useMediaQuery(theme.breakpoints.down("md"));
@@ -41,6 +64,8 @@ export const BeforeLogin = () => {
         >
           <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
           <OutlinedInput
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             id="outlined-adornment-email"
             type="email"
             endAdornment={
@@ -70,6 +95,8 @@ export const BeforeLogin = () => {
             Password
           </InputLabel>
           <OutlinedInput
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             endAdornment={
@@ -86,6 +113,22 @@ export const BeforeLogin = () => {
             }
             label="Password"
           />
+
+          <Button
+            onClick={SingInHandler}
+            sx={{ mx: 20, mt: 3 }}
+            variant="contained"
+          >
+            Submit
+          </Button>
+          <Button
+            onClick={googleLoginHandler}
+            sx={{ mx: 5, my: 3, py: 2 }}
+            variant="contained"
+            startIcon={<Google />}
+          >
+            Continue with Google
+          </Button>
         </FormControl>
       </div>
     </div>

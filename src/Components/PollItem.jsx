@@ -1,26 +1,23 @@
-import { useSelector, useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import PollCheckedOption from "./PollCheckedOption";
 import PollUncheckedOption from "./PollUncheckedOption";
-export const PollItem = ({ PollItemHandler, item }) => {
-  const ides = useSelector((state) => state.userData.ides);
+export const PollItem = ({ item }) => {
+  const { ides } = useSelector((state) => state.userData);
   const pollOpen = Boolean(ides.find((id) => id === item.id));
-  const numArray = ["a", "b", "c", "d"];
+  const { numArray } = useSelector((state) => state.pollData);
   return (
-    <div
-      onClick={(e) => PollItemHandler(e, item.id)}
-      className="bg-[#fcc] h-[17.4rem] mx-3 shadow-lg rounded sm:h-[27rem] md:h-[29rem] lg:h-[27.4rem]"
-    >
+    <div className="bg-[#fcc] mx-3 shadow-lg rounded pb-5">
       <div className="px-3 pt-3 bg-slate-800 text-white rounded-tl rounded-tr text-center py-6 sm:py-7 sm:text-[1.5rem]">
         {item.question}
       </div>
-      <div className="mt-5 flex flex-col gap-3 sm:mt-6">
+      <div className="mt-5 flex flex-col gap-3 sm:mt-6 ">
         {!pollOpen &&
-          item.options.map((option, i) => (
+          item?.options.map((option, i) => (
             <PollUncheckedOption
               option={option}
               optionNum={numArray[i]}
               key={numArray[i]}
+              id={item.id}
             />
           ))}
         {pollOpen &&
@@ -30,8 +27,14 @@ export const PollItem = ({ PollItemHandler, item }) => {
               option={option}
               optionNum={numArray[i]}
               key={numArray[i]}
+              id={item.id}
             />
           ))}
+        <div className="flex justify-center items-center">
+          <div>{`Subscribers = ${
+            item.subscribers ? item.subscribers : 0
+          }`}</div>
+        </div>
       </div>
     </div>
   );

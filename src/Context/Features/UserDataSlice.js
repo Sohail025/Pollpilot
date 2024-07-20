@@ -7,6 +7,7 @@ const initialState = {
   email: "",
   Password: "",
   useeEffectChecker: true,
+  updateFirebaseItem: "",
 };
 
 const UserDataSlice = createSlice({

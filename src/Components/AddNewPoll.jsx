@@ -1,9 +1,8 @@
 import { Button } from "@mui/material";
 import AddOptionSelect from "../muiComponents.jsx/AddOptionSelect";
 import { useState, useEffect } from "react";
-
+import { AddPoll } from "../Context/Firebase/Functions";
 import AddNewPollOptionsItem from "./AddNewPollOptionsItem";
-import { AddData } from "../Context/Functions/FirbaseDataHandlers";
 import { AddNewPollHandler } from "../Context/Features/PollDataSlice";
 import { useDispatch } from "react-redux";
 export const AddNewPoll = () => {
@@ -20,11 +19,13 @@ export const AddNewPoll = () => {
     const newPoll = {
       question,
       options: [option1, option2, option3, option4],
-      optionsValue: [],
+      optionValues: [],
       correctOption,
-      id: crypto.randomUUID(),
+      subscribers: 0,
     };
     dispatch(AddNewPollHandler([newPoll]));
+    console.log(newpoll);
+    if (newPoll) AddPoll(newPoll);
     setNewpoll(newPoll);
     SetQuestion("");
     SetOption1("");
@@ -33,9 +34,6 @@ export const AddNewPoll = () => {
     SetOption4("");
     setCorrectOption(0);
   };
-  useEffect(() => {
-    if (newpoll) AddData(newpoll);
-  }, [newpoll]);
   return (
     <form className="mt-20 flex flex-col gap-9 lg:mt-20">
       <div className="flex flex-col mx-10 md:mx-16 lg:mx-52 xl:mx-[20rem]">
