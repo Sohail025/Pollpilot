@@ -23,13 +23,15 @@ export const PollCheckedOption = ({ optionValue, option, optionNum, id }) => {
         </p>
         <div className="h-3 border-[0.1rem] border-[#292626] rounded flex items-center ">
           <div
-            style={{ width: `${optionValue}%` }}
+            style={{ width: `${Math.floor(optionValue)}%` }}
             className={` bg-slate-700 h-[0.4rem] rounded`}
           ></div>
         </div>
       </div>
       <div className="w-2/12 px-1 md:pl-0 md:pr-2">
-        <span className="px-2 sm:text-[1.5rem]">{`${optionValue}%`}</span>
+        <span className="px-2 sm:text-[1.5rem]">{`${Math.floor(
+          optionValue
+        )}%`}</span>
       </div>
     </div>
   );

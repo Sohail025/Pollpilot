@@ -8,6 +8,7 @@ const initialState = {
   Password: "",
   useeEffectChecker: true,
   updateFirebaseItem: "",
+  changedId: "",
 };
 
 const UserDataSlice = createSlice({
@@ -28,8 +29,16 @@ const UserDataSlice = createSlice({
     useeEffectCheckerHandler: (state, action) => {
       state.useeEffectChecker = action.payload;
     },
+    ChangedIdHandler: (state, action) => {
+      state.changedId = action.payload;
+    },
   },
 });
-export const { idTaker, idRemover, myPollIdHandler, useeEffectCheckerHandler } =
-  UserDataSlice.actions;
+export const {
+  idTaker,
+  idRemover,
+  myPollIdHandler,
+  useeEffectCheckerHandler,
+  ChangedIdHandler,
+} = UserDataSlice.actions;
 export default UserDataSlice.reducer;

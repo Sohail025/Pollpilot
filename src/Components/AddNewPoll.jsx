@@ -19,12 +19,11 @@ export const AddNewPoll = () => {
     const newPoll = {
       question,
       options: [option1, option2, option3, option4],
-      optionValues: [],
+      optionValues: [0, 0, 0, 0],
       correctOption,
       subscribers: 0,
     };
     dispatch(AddNewPollHandler([newPoll]));
-    console.log(newpoll);
     if (newPoll) AddPoll(newPoll);
     setNewpoll(newPoll);
     SetQuestion("");
@@ -46,6 +45,7 @@ export const AddNewPoll = () => {
           className=" h-12 border-[0.2rem] border-[#b53b3b] rounded-[0.6rem] indent-1 sm:h-14"
           id="Qoustion"
           type="text"
+          autoComplete="off"
         />
       </div>
       <div className="flex flex-col gap-3 ">

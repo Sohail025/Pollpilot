@@ -1,4 +1,3 @@
-import { SumCalc } from "../Hooks/sumCalc";
 import { usePercentageValueUpdate } from "../Hooks/usePercentageValueUpdate";
 export const ValuesChangeHandler = (state, action) => {
   const { id, optionNum } = action.payload;
@@ -6,13 +5,14 @@ export const ValuesChangeHandler = (state, action) => {
   const data = JSON.parse(JSON.stringify(state.data));
   const targatPoll = data.find((item) => item.id === id);
 
-  const [sum] = SumCalc(targatPoll);
-  const [updatedValue] = usePercentageValueUpdate(targatPoll, sum, index);
-  const updatedSubcribers = targatPoll.subscribers + 1;
-  console.log(updatedValue, updatedSubcribers);
-
+  const updatedSubcribers = targatPoll.subscribers;
+  const [updatedValue] = usePercentageValueUpdate(
+    targatPoll.optionValues,
+    index,
+    updatedSubcribers
+  );
   state.changes = {
-    subscribers: updatedSubcribers,
+    subscribers: updatedSubcribers + 1,
     optionValues: updatedValue,
   };
   state.data.forEach((item) => {

@@ -1,19 +1,31 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { UpdatePoll } from "../Context/Firebase/Functions";
-import { idTaker } from "../Context/Features/UserDataSlice";
+import { idTaker, ChangedIdHandler } from "../Context/Features/UserDataSlice";
 import { ValuesHandler } from "../Context/Features/PollDataSlice";
 export const PollUncheckedOption = ({ id, optionNum, option }) => {
   const dispatch = useDispatch();
-  const ides = useSelector((state) => state.userData.ides);
-  const { changes } = useSelector((state) => state.pollData);
-
+  const { ides, changedId } = useSelector((state) => state.userData);
+  // console.log(changedId);
+  const { changes, data } = useSelector((state) => state.pollData);
   const usePollEventHandler = (id, optionNum) => {
     const isIdStored = Boolean(ides.find((item) => item === id));
     if (!isIdStored) dispatch(idTaker(id));
     dispatch(ValuesHandler({ id, optionNum }));
-    UpdatePoll(id, changes);
+    dispatch(ChangedIdHandler(id));
+    // console.log(id);
+    // if (changedId) console.log(changedId);
   };
-
+  useEffect(() => {
+    const FetchFunc = async () => {
+      const updateCheck = changes.optionValues.every((item) => item === 0);
+      // console.log(changedId, changes);
+      if (!updateCheck) {
+        await UpdatePoll(changedId, changes);
+      }
+    };
+    FetchFunc();
+  }, [changedId, changes]);
   return (
     <div
       onClick={() => usePollEventHandler(id, optionNum)}
